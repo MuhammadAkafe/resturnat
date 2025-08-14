@@ -6,7 +6,7 @@
     "prisma": "prisma generate && prisma migrate dev --name init",
     "dev": "next dev",
     "build": "prisma generate && prisma migrate deploy && next build",
-    "start": "next start",
+    "start": "npx prisma generate && npx prisma migrate deploy && next start",
     "lint": "next lint"
   },
   "dependencies": {
