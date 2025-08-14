@@ -19,7 +19,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await params;
+    const { id } = params;
     const body = await request.json();
     const { title, description, category, price } = body;
 
@@ -55,7 +55,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await params;
+    const { id } = params;
     const product = await prisma.product.findUnique({
       where: { id: parseInt(id) },
     });
