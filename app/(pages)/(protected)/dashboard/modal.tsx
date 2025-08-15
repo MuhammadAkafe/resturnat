@@ -4,6 +4,7 @@ import useModal from "@/app/hooks/useModal";
 import { Plus, Users, BarChart3, X } from "lucide-react";
 import React, { useState } from "react";
 import ImageUpload from "./image_upload";
+import RegisterModal from "./register-modal";
 
 const catgories = [
   "appetizers",
@@ -31,8 +32,30 @@ function Modal() {
     imagePreview,
     handleImageChange,
     setImagePreview,
-     isModalLoading,
+    isModalLoading,
   } = useModal();
+
+  // Modal state
+  const [modalType, setModalType] = useState<"menu" | "register" | null>(null);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+
+  const openMenuModal = () => {
+    setModalType("menu");
+    setIsModalOpen(true);
+  };
+
+  const openRegisterModal = () => {
+    setIsRegisterModalOpen(true);
+  };
+
+  const closeMenuModal = () => {
+    setModalType(null);
+    setIsModalOpen(false);
+  };
+
+  const closeRegisterModal = () => {
+    setIsRegisterModalOpen(false);
+  };
 
   return (
     <div className="bg-white rounded-lg  p-6 mb-8">
@@ -41,13 +64,16 @@ function Modal() {
       </div>
       <div className="flex flex-wrap gap-4">
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={openMenuModal}
           className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           <Plus className="h-5 w-5 mr-2" />
           Add Menu Item
         </button>
-        <button className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+        <button
+          onClick={openRegisterModal}
+          className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+        >
           <Users className="h-5 w-5 mr-2" />
           Manage Users
         </button>
@@ -57,15 +83,13 @@ function Modal() {
         </button>
       </div>
 
-      {isModalOpen && (
+      {/* Menu Modal */}
+      {isModalOpen && modalType === "menu" && (
         <>
           {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40"
-            onClick={() => setIsModalOpen(false)}
-          />
+          <div className="fixed inset-0  z-40" onClick={closeMenuModal} />
 
-          {/* Modal */}
+          {/* Menu Modal */}
           <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="bg-white shadow-xl rounded-lg p-6 w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-4">
@@ -73,9 +97,7 @@ function Modal() {
                   Add Menu Item
                 </h3>
                 <button
-                  onClick={() => {
-                    setIsModalOpen(false);
-                  }}
+                  onClick={closeMenuModal}
                   className="text-gray-400 hover:text-gray-600"
                 >
                   <X className="h-6 w-6" />
@@ -175,9 +197,7 @@ function Modal() {
                 <div className="flex justify-end space-x-3 pt-4">
                   <button
                     type="button"
-                    onClick={() => {
-                      setIsModalOpen(false);
-                    }}
+                    onClick={closeMenuModal}
                     className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
                   >
                     Cancel
@@ -195,6 +215,12 @@ function Modal() {
           </div>
         </>
       )}
+
+      {/* Register Modal */}
+      <RegisterModal
+        isOpen={isRegisterModalOpen}
+        onClose={closeRegisterModal}
+      />
     </div>
   );
 }

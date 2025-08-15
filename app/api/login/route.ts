@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
     const token = jwt.sign(
       { id: user.id }, 
       JWT_SECRET as string, 
-      { expiresIn: '30d' }
+      { expiresIn: '1d' }
     );
     
     // Remove password from user object
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
       httpOnly: true,
       sameSite: "strict",
       secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 24 * 30, // 30 days
+      maxAge: 60 * 60 * 24 , // 30 days
       path: "/",
     });
     
