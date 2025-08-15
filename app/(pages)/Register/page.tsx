@@ -163,7 +163,6 @@ export default function RegisterPage() {
             value={formData.username}
             onChange={(e) => handleInputChange("username", e.target.value)}
             required
-            autoComplete="username"
             error={touched.username ? formErrors.username : undefined}
             onBlur={() => handleBlur("username")}
             minLength={3}
