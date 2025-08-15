@@ -16,6 +16,15 @@ interface FormFieldProps {
   maxLength?: number;
   pattern?: string;
   autoComplete?: string;
+  inputMode?:
+    | "none"
+    | "text"
+    | "tel"
+    | "url"
+    | "email"
+    | "numeric"
+    | "decimal"
+    | "search";
   className?: string;
   "aria-describedby"?: string;
 }
@@ -38,6 +47,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
       maxLength,
       pattern,
       autoComplete,
+      inputMode,
       className = "",
       "aria-describedby": ariaDescribedby,
     },
@@ -75,6 +85,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
           maxLength={maxLength}
           pattern={pattern}
           autoComplete={autoComplete}
+          inputMode={inputMode}
           aria-invalid={error ? "true" : "false"}
           aria-describedby={describedBy || undefined}
           className={`

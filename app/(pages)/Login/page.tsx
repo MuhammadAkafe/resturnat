@@ -23,6 +23,11 @@ export default function LoginPage() {
     e.preventDefault();
     setFormErrors({});
 
+    // Prevent multiple submissions
+    if (isLoading) {
+      return;
+    }
+
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
@@ -51,7 +56,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-12 bg-gray-50">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+      <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-gray-200 p-8 mx-4">
         <h1 className="text-2xl font-bold text-gray-900 mb-1 text-center">
           Sign in
         </h1>
@@ -85,6 +90,7 @@ export default function LoginPage() {
             autoComplete="email"
             error={touched.email ? formErrors.email : undefined}
             onBlur={() => handleBlur("email")}
+            inputMode="email"
           />
 
           <FormField
@@ -97,6 +103,7 @@ export default function LoginPage() {
             autoComplete="current-password"
             error={touched.password ? formErrors.password : undefined}
             onBlur={() => handleBlur("password")}
+            inputMode="text"
           />
 
           <div className="flex items-center justify-between">
@@ -120,7 +127,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-white font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+            className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-white font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 touch-manipulation"
             aria-describedby={isLoading ? "loading-description" : undefined}
           >
             {isLoading ? (

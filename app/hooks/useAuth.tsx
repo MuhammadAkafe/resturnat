@@ -65,11 +65,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setError("");
 
       try {
+        // Create AbortController for timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
         const response = await fetch("/api/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify(credentials),
+          signal: controller.signal,
         });
+
+        clearTimeout(timeoutId);
 
         const data = await response.json();
 
@@ -85,9 +93,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         return { success: true, isAdmin: data.isAdmin };
       } catch (error) {
-        const errorMessage = "An error occurred. Please try again.";
-        setError(errorMessage);
         console.error("Login error:", error);
+
+        // Handle different types of errors
+        let errorMessage = "An error occurred. Please try again.";
+
+        if (error instanceof TypeError && error.message.includes("fetch")) {
+          errorMessage =
+            "Network error. Please check your connection and try again.";
+        } else if (error instanceof Error && error.name === "AbortError") {
+          errorMessage =
+            "Request timed out. Please check your connection and try again.";
+        } else if (error instanceof Error) {
+          errorMessage = error.message || errorMessage;
+        }
+
+        setError(errorMessage);
         return { success: false, message: errorMessage };
       } finally {
         setIsLoading(false);

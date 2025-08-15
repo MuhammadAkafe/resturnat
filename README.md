@@ -34,3 +34,21 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Mobile Compatibility
+
+This application has been optimized for mobile devices with the following improvements:
+
+- **Enhanced Error Handling**: Better error messages for network issues and timeouts
+- **Mobile Form Input**: Proper input modes for email and password fields
+- **Touch Optimization**: Improved touch targets and button interactions
+- **Network Timeout**: 10-second timeout for API requests to handle slow connections
+- **Responsive Design**: Mobile-first responsive layout with proper viewport settings
+
+### Mobile-Specific Features:
+
+- Proper viewport meta tags for mobile browsers
+- Touch-friendly form inputs with appropriate input modes
+- Network error handling for mobile connections
+- Request timeout handling for slow mobile networks
+- Enhanced error messages for better user experience

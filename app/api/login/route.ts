@@ -91,8 +91,25 @@ export async function POST(req: NextRequest) {
     
   } catch (error) {
     console.error("Login error:", error);
+    
+    // Provide more specific error messages for debugging
+    if (error instanceof Error) {
+      if (error.message.includes('connect')) {
+        return NextResponse.json(
+          { message: "Database connection error. Please try again." }, 
+          { status: 500 }
+        );
+      }
+      if (error.message.includes('bcrypt')) {
+        return NextResponse.json(
+          { message: "Password verification error. Please try again." }, 
+          { status: 500 }
+        );
+      }
+    }
+    
     return NextResponse.json(
-      { message: "Internal server error" }, 
+      { message: "Internal server error. Please try again." }, 
       { status: 500 }
     );
   }
